@@ -43,6 +43,7 @@ mongoose.connection.on("open", function () {
     },
     username: {
       type: String,
+      unique: true,
       required: true
     },
     password: {
@@ -63,6 +64,7 @@ mongoose.connection.on("open", function () {
   const phoneGrade = new mongoose.Schema({
     name: {
       type: String,
+      unique: true,
       required: true
     },
     CPU: {
@@ -89,6 +91,7 @@ mongoose.connection.on("open", function () {
   const phoneSocGrade = new mongoose.Schema({
     name: {
       type: String,
+      unique: true,
       required: true
     },
     CPU: {
@@ -119,6 +122,10 @@ mongoose.connection.on("open", function () {
     },
     flag: {
       type: Number,
+      required: true
+    },
+    imgUrl: {
+      type: String,
       required: true
     }
   }, { collection: "information", versionKey: false });
@@ -955,6 +962,31 @@ mongoose.connection.on("open", function () {
 
   /**
    * effect: 获取所有资讯
+   * method: get
+   */
+
+   app.get("/getInformationList", (req, res) => {
+
+    informationModel.find((error, result) => {
+      if (!error) {
+        res.json({
+          code: 1,
+          message: "查找成功",
+          data: result
+        })
+      } else {
+        res.json({
+          code: -1,
+          message: "接口错误",
+          data: error
+        })
+      }
+    })
+
+  })
+
+  /**
+   * effect: 获取对应资讯
    * method: get
    */
 
